@@ -33,6 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+        viewBinding = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
@@ -42,6 +49,18 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("androidx.compose.ui:ui:1.5.1")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.1")
+    implementation("androidx.compose.material:material:1.5.1")
+
+    // La dependencia de Runtime de Compose
+    implementation("androidx.compose.runtime:runtime:1.5.1")
+
+    // Dependencias para testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
