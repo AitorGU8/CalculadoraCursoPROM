@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.btMul -> onOperationPressed("x")
             binding.btDiv -> onOperationPressed("/")
             binding.btEqual -> onEqualPressed()
-            binding.btClear -> ""
+            binding.btClear -> onClearPressed()
         }
     }
 
@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun onEqualPressed(){
-        val result = when (operation){
+    private fun onEqualPressed() {
+        val result = when (operation) {
             "+" -> firstNumber + secondNumber
             "-" -> firstNumber - secondNumber
             "x" -> firstNumber * secondNumber
@@ -107,10 +107,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         operation = null
         firstNumber = result.toDouble()
 
-        binding.screen.text= if(result.toString().endsWith(".0")){
-            result.toString().replace(".0","")
-        }else{
-            "%.2f".format(result)
+        try {
+            binding.screen.text = if (result.toString().endsWith(".0")) {
+                result.toString().replace(".0", "")
+            }else {
+                "%.2f".format(result)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
         }
+
+    }
+
+    private fun onClearPressed(){
+        binding.screen.text = "0"
+        firstNumber = 0.0
+        secondNumber = 0.0
     }
 }
