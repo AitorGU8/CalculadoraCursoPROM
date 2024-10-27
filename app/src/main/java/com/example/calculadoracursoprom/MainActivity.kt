@@ -58,17 +58,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.bt9 -> onNumberPressed("9")
 
             binding.btComma -> onNumberPressed(",")
-            binding.btPlus -> ""
-            binding.btMinus -> ""
-            binding.btMul -> ""
-            binding.btDiv -> ""
-            binding.btEqual -> ""
+            binding.btPlus -> onOperationPressed("+")
+            binding.btMinus -> onOperationPressed("-")
+            binding.btMul -> onOperationPressed("x")
+            binding.btDiv -> onOperationPressed("/")
+            binding.btEqual -> onEqualPressed()
             binding.btClear -> ""
         }
     }
 
     private fun onNumberPressed(number:String){
         renderScreen(number)
+        checkOperation()
     }
 
     private fun renderScreen(number:String){
@@ -82,9 +83,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun  checkOperation(){
         if(operation==null)
-            firstNumber == binding.screen.text.toString().toDouble()
+            firstNumber = binding.screen.text.toString().toDouble()
         else
-            secondNumber == binding.screen.text.toString().toDouble()
+            secondNumber = binding.screen.text.toString().toDouble()
     }
 
+    private fun onOperationPressed(operation:String){
+        this.operation = operation
+        firstNumber = binding.screen.text.toString().toDouble()
+
+        binding.screen.text = "0"
+
+    }
+
+    private fun onEqualPressed(){
+        val result = when (operation){
+            "+" -> firstNumber + secondNumber
+            "-" -> firstNumber - secondNumber
+            "x" -> firstNumber * secondNumber
+            "/" -> firstNumber / secondNumber
+            else -> 0
+        }
+        operation = null
+        firstNumber = result.toDouble()
+
+        binding.screen.text= if(result.toString().endsWith(".0")){
+            result.toString().replace(".0","")
+        }else{
+            "%.2f".format(result)
+        }
+    }
 }
